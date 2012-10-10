@@ -1,2 +1,1 @@
-all:
-	make -C ..
+include $(shell rospack find mk)/cmake.mk

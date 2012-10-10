@@ -1,64 +1,19 @@
-project(moveit_msgs)
+cmake_minimum_required(VERSION 2.4.6)
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
-catkin_project(moveit_msgs)
+# Set the build type.  Options are:
+#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
+#  Debug          : w/ debug symbols, w/o optimization
+#  Release        : w/o debug symbols, w/ optimization
+#  RelWithDebInfo : w/ debug symbols, w/ optimization
+#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
+#set(ROS_BUILD_TYPE RelWithDebInfo)
 
-find_package(genmsg REQUIRED)
+rosbuild_init()
 
-set(MSG_DEPS std_msgs actionlib_msgs visualization_msgs sensor_msgs geometry_msgs trajectory_msgs shape_msgs octomap_msgs)
+#set the default path for built executables to the "bin" directory
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+#set the default path for built libraries to the "lib" directory
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-find_package(catkin REQUIRED ${MSG_DEPS})
-
-set(MSG_FILES
-AllowedCollisionEntry.msg
-AllowedCollisionMatrix.msg
-AttachedCollisionObject.msg
-BoundingVolume.msg
-CollisionMap.msg
-CollisionObject.msg
-ConstraintEvalResult.msg
-ConstraintEvalResults.msg
-Constraints.msg
-CostSource.msg
-ContactInformation.msg
-DisplayTrajectory.msg
-JointConstraint.msg
-JointLimits.msg
-LinkPadding.msg
-LinkScale.msg
-MotionPlanDetailedResponse.msg
-MotionPlanRequest.msg
-MoveItErrorCodes.msg
-MultiDOFJointState.msg
-MultiDOFJointTrajectory.msg
-MultiDOFJointTrajectoryPoint.msg
-ObjectColor.msg
-OrientationConstraint.msg
-OrientedBoundingBox.msg
-PlannerInterfaceDescription.msg
-PlanningScene.msg
-PlanningSceneWorld.msg
-PositionConstraint.msg
-RobotState.msg
-RobotTrajectory.msg
-VisibilityConstraint.msg
-WorkspaceParameters.msg
-)
-
-set(SRV_FILES
-ComputePlanningBenchmark.srv
-ConstructConstraintApproximation.srv
-GetMotionPlan.srv
-ExecuteKnownTrajectory.srv
-GetStateValidity.srv
-QueryPlannerInterfaces.srv
-)
-
-set(ACT_FILES
-MoveGroup.action
-)
-
-add_action_files(DIRECTORY action FILES ${ACT_FILES})
-add_message_files(DIRECTORY msg FILES ${MSG_FILES})
-add_service_files(DIRECTORY srv FILES ${SRV_FILES})
-
-generate_messages(DEPENDENCIES ${MSG_DEPS})
+rosbuild_genmsg()
